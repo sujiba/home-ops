@@ -1,0 +1,61 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.12.2
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    provider: pihole
+    env:
+      - name: pihole-password
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-secret
+            key: api-key
+    extraArgs:
+      - --source=service
+      - --source=ingress
+      # Pihole only supports A/CNAME records so there is no mechanism to track ownership.
+      # You don't need to set this flag, but if you leave it unset, you will receive warning
+      # logs when ExternalDNS attempts to create TXT records.
+      - --registry=noop
+      # IMPORTANT: If you have records that you manage manually in Pi-hole, set
+      # the policy to upsert-only so they do not get deleted.
+      - --policy=upsert-only
+      # Change this to the actual address of your Pi-hole web server
+      - --pihole-server=https://pihole-01.${SECRET_DOMAIN}
+    policy: sync
+    sources:
+      - ingress
+    domainFilters: ["${SECRET_DOMAIN}"]
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: external-dns-secret
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 25m
+      limits:
+        memory: 250Mi

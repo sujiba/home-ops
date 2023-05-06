@@ -18,6 +18,7 @@ kubectl create ns flux-system
 vi ~/.zshrc
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
 source ~/.zshrc
+sops --encrypt --in-place path/to/secrets.sops.yaml
 ```
 
 ```bash
