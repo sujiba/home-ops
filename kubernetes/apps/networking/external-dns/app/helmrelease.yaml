@@ -33,19 +33,19 @@ spec:
           secretKeyRef:
             name: external-dns-secret
             key: api-key
-    extraArgs:
+    args:
       - --source=service
       - --source=ingress
       # Pihole only supports A/CNAME records so there is no mechanism to track ownership.
       # You don't need to set this flag, but if you leave it unset, you will receive warning
       # logs when ExternalDNS attempts to create TXT records.
-      #- --registry=noop
+      - --registry=noop
       # IMPORTANT: If you have records that you manage manually in Pi-hole, set
       # the policy to upsert-only so they do not get deleted.
       - --policy=upsert-only
       # Change this to the actual address of your Pi-hole web server
       - --pihole-server=https://pihole-01.${SECRET_DOMAIN}
-      - --log-level=debug
+      #- --log-level=debug
     policy: sync
     sources:
       - ingress
