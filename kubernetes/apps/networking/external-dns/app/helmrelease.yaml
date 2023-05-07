@@ -45,6 +45,7 @@ spec:
       - --policy=upsert-only
       # Change this to the actual address of your Pi-hole web server
       - --pihole-server=https://pihole-01.${SECRET_DOMAIN}
+      - --log-level=debug
     policy: sync
     sources:
       - ingress
