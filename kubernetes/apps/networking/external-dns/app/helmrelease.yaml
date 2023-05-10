@@ -44,7 +44,7 @@ spec:
           secretKeyRef:
             name: external-dns-secret
             key: api-key
-    extraArgs:
+    args:
       - --pihole-server=https://pihole-01.${SECRET_DOMAIN}
     domainFilters: ["${SECRET_DOMAIN}"]
     serviceMonitor:
