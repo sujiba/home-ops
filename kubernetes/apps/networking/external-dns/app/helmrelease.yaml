@@ -26,7 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    #provider: pihole
+    provider: pihole
     # IMPORTANT: If you have records that you manage manually in Pi-hole, set
     # the policy to upsert-only so they do not get deleted.
     # Change this to the actual address of your Pi-hole web server
@@ -59,7 +59,7 @@ spec:
       # IMPORTANT: If you have records that you manage manually in Pi-hole, set
       # the policy to upsert-only so they do not get deleted.
       - --policy=upsert-only
-      - --provider=pihole
+      #- --provider=pihole
       # Change this to the actual address of your Pi-hole web server
       #- --pihole-server=https://pihole-01.${SECRET_DOMAIN}
     domainFilters: ["${SECRET_DOMAIN}"]
