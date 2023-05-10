@@ -27,6 +27,17 @@ spec:
     keepHistory: false
   values:
     provider: pihole
+    # IMPORTANT: If you have records that you manage manually in Pi-hole, set
+    # the policy to upsert-only so they do not get deleted.
+    # Change this to the actual address of your Pi-hole web server
+    policy: upsert-only
+    # Pihole only supports A/CNAME records so there is no mechanism to track ownership.
+    # You don't need to set this flag, but if you leave it unset, you will receive warning
+    # logs when ExternalDNS attempts to create TXT records.
+    registry: noop
+    sources:
+      - ingress
+      - service
     env:
       - name: EXTERNAL_DNS_PIHOLE_PASSWORD
         valueFrom:
@@ -34,20 +45,7 @@ spec:
             name: external-dns-secret
             key: api-key
     extraArgs:
-      # - --source=service
-      # - --source=ingress
-      # Pihole only supports A/CNAME records so there is no mechanism to track ownership.
-      # You don't need to set this flag, but if you leave it unset, you will receive warning
-      # logs when ExternalDNS attempts to create TXT records.
-      # - --registry=noop
-      # IMPORTANT: If you have records that you manage manually in Pi-hole, set
-      # the policy to upsert-only so they do not get deleted.
-      - --policy=upsert-only
-      # Change this to the actual address of your Pi-hole web server
       - --pihole-server=https://pihole-01.${SECRET_DOMAIN}
-    policy: sync
-    sources:
-      - ingress
     domainFilters: ["${SECRET_DOMAIN}"]
     serviceMonitor:
       enabled: true
