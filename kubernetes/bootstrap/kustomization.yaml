@@ -16,3 +16,4 @@ patches:
     target:
       group: networking.k8s.io
       kind: NetworkPolicy
+      version: v1
