@@ -22,17 +22,14 @@ sops --encrypt --in-place path/to/secrets.sops.yaml
 ```
 
 ```bash
-kubectl apply --kustomize ./kubernetes/bootstrap
 cat $SOPS_AGE_KEY_FILE | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+kubectl apply --kustomize ./kubernetes/bootstrap
 ```
 
 ## Decrypt cluster secrets and apply them during bootstrap to mitigate racing conditions
 ```bash
 sops --decrypt kubernetes/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
 kubectl apply -f kubernetes/flux/vars/cluster-settings.yaml
-```
-
-```bash
 kubectl apply --server-side --kustomize ./kubernetes/flux/config
 ```
 
