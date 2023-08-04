@@ -49,7 +49,7 @@ spec:
           secretKeyRef:
             name: external-dns-secret
             key: pihole-server
-    extraArgs:
+    args:
       - --source=service
       - --source=ingress
       # Pihole only supports A/CNAME records so there is no mechanism to track ownership.
