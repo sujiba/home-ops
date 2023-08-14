@@ -33,12 +33,12 @@ spec:
       name: letsencrypt-staging
     solvers:
       - dns01:
-        webhook:
-          groupName: com.netcup.webhook
-          solverName: netcup
-          config:
-            secretRef: netcup-secret
-            secretNamespace: certificates
-        selector:
-          dnsNames:
-            - "*.${SECRET_DOMAIN}"
+          webhook:
+            groupName: com.netcup.webhook
+            solverName: netcup
+            config:
+              secretRef: netcup-secret
+              secretNamespace: certificates
+          selector:
+            dnsNames:
+              - "*.${SECRET_DOMAIN}"
