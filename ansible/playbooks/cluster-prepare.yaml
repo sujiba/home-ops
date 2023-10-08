@@ -1,0 +1,118 @@
+---
+- name: Prepare System
+  hosts: all
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  pre_tasks:
+    - name: Pausing for 5 seconds...
+      ansible.builtin.pause:
+        seconds: 5
+  tasks:
+    - name: Locale
+      block:
+        - name: Locale | Set timezone
+          community.general.timezone:
+            name: "{{ timezone | default('Europe/Berlin') }}"
+
+    - name: Packages
+      block:
+        - name: Packages | Install
+          ansible.builtin.apt:
+            name: apt-transport-https,ca-certificates,conntrack,curl,dirmngr,gdisk,gnupg,hdparm,htop,
+              iptables,iputils-ping,ipvsadm,libseccomp2,lm-sensors,net-tools,nfs-common,
+              nvme-cli,open-iscsi,parted,psmisc,python3,python3-apt,python3-kubernetes,python3-yaml,
+              smartmontools,socat,software-properties-common,unzip,util-linux
+            install_recommends: false
+
+    - name: Network Configuration
+      notify: Reboot
+      block:
+        - name: Network Configuration | Set hostname
+          ansible.builtin.hostname:
+            name: "{{ inventory_hostname }}"
+        - name: Network Configuration | Update hosts
+          ansible.builtin.copy:
+            content: |
+              127.0.0.1 localhost
+              127.0.1.1 {{ inventory_hostname }}
+            dest: /etc/hosts
+            mode: preserve
+        # https://github.com/cilium/cilium/issues/18706
+        - name: Network Configuration | Cilium (1)
+          ansible.builtin.lineinfile:
+            dest: /etc/systemd/networkd.conf
+            regexp: ManageForeignRoutingPolicyRules
+            line: ManageForeignRoutingPolicyRules=no
+        - name: Network Configuration | Cilium (2)
+          ansible.builtin.lineinfile:
+            dest: /etc/systemd/networkd.conf
+            regexp: ManageForeignRoutes
+            line: ManageForeignRoutes=no
+
+    - name: System Configuration
+      notify: Reboot
+      block:
+        - name: System Configuration | Set bash profile.
+          ansible.builtin.copy:
+            src: files/profile.d/00-bash.sh
+            dest: /etc/profile.d/00-bash.sh
+            owner: root
+            group: root
+            mode: '0644'
+        - name: System Configuration | Set vim config.
+          ansible.builtin.copy:
+            src: files/vim/vimrc.local
+            dest: /etc/vim/vimrc.local
+            owner: root
+            group: root
+            mode: '0644'
+        - name: System Configuration | Disable apparmor
+          ansible.builtin.systemd:
+            name: apparmor
+            state: stopped
+            masked: true
+        - name: System Configuration | Disable swap
+          ansible.posix.mount:
+            name: "{{ item }}"
+            fstype: swap
+            state: absent
+          loop: ["none", "swap"]
+        - name: System Configuration | Disable IPv6
+          ansible.posix.sysctl:
+            name: "{{ item }}"
+            value: "1"
+            reload: false
+          loop:
+            - net.ipv6.conf.all.disable_ipv6
+            - net.ipv6.conf.default.disable_ipv6
+            - net.ipv6.conf.lo.disable_ipv6
+        - name: System Configuration | Kernel modules (1)
+          community.general.modprobe:
+            name: "{{ item }}"
+            state: present
+          loop: ["br_netfilter", "ceph", "ip_vs", "ip_vs_rr", "nbd", "overlay", "rbd"]
+        - name: System Configuration | Kernel modules (2)
+          ansible.builtin.copy:
+            dest: "/etc/modules-load.d/{{ item }}.conf"
+            mode: "0644"
+            content: "{{ item }}"
+          loop: ["br_netfilter", "ceph", "ip_vs", "ip_vs_rr", "nbd", "overlay", "rbd"]
+        - name: System Configuration | Sysctl
+          ansible.posix.sysctl:
+            name: "{{ item.key }}"
+            value: "{{ item.value }}"
+            sysctl_file: /etc/sysctl.d/99-kubernetes.conf
+            reload: true
+          with_dict: "{{ sysctl_config }}"
+          vars:
+            sysctl_config:
+              fs.inotify.max_queued_events: 65536
+              fs.inotify.max_user_watches: 524288
+              fs.inotify.max_user_instances: 8192
+
+  handlers:
+    - name: Reboot
+      ansible.builtin.reboot:
+        msg: Rebooting nodes
+        reboot_timeout: 3600

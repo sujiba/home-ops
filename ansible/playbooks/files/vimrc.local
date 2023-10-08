@@ -1,0 +1,10 @@
+set nocompatible
+set ignorecase
+set hlsearch
+set showmatch
+set wrap
+set mouse-=a
+set autoindent
+syntax on
+highlight Comment ctermfg=LightCyan
+let g:skip_defaults_vim = 1
