@@ -18,7 +18,7 @@ spec:
     k8sAppLabelOverride: kube-dns
     service:
       name: kube-dns
-      clusterIP: "{% raw %}{{ coredns_addr }}{% endraw %}"
+      clusterIP: "{{ coredns_addr }}"
     serviceAccount:
       create: true
     deployment:
