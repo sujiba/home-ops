@@ -32,3 +32,6 @@ task ansible:uptime
 # Destroy cluster with
 task ansible:nuke
 ```
+
+### Bootstrap cluster
+[Bootstrap](kubernetes/README.md)
