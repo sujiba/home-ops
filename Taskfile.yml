@@ -1,3 +1,4 @@
+---
 version: "3"
 
 vars:
@@ -12,7 +13,7 @@ env:
 
 includes:
   ansible: .taskfiles/AnsibleTasks.yaml
-  #cluster: .taskfiles/ClusterTasks.yaml
+  # cluster: .taskfiles/ClusterTasks.yaml
   precommit: .taskfiles/PrecommitTasks.yaml
 
 tasks:
