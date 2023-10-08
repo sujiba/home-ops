@@ -6,7 +6,7 @@ github_username: sujiba
 # CIDR your nodes are on (e.g. 192.168.1.0/24)
 node_cidr: 192.168.178.0/24
 # The IP address to use with kube-vip, choose an available IP in your nodes network that is not being used
-kube_vip_address: 192.168.178.100
+kube_vip_addr: 192.168.178.100
 
 # Keep the next three options default unless you know what you are doing
 cluster_cidr: 10.42.0.0/16
@@ -37,7 +37,7 @@ k3s_etcd_datastore: true
 k3s_use_unsupported_config: true
 
 # (string) Control Plane registration address
-k3s_registration_address: "{{ kube_vip_address }}"
+k3s_registration_address: "{{ kube_vip_addr }}"
 
 # (list) A list of URLs to deploy on the primary control plane.
 k3s_server_manifests_urls:

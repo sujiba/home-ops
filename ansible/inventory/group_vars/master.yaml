@@ -10,7 +10,7 @@ k3s_server:
   node-ip: "{{ ansible_host }}"
   tls-san:
     # kube-vip
-    - "{{ kube_vip_address }}"
+    - "{{ kube_vip_addr }}"
   # Disable Docker - this will use the default containerd CRI
   docker: false
   flannel-backend: "none" # This needs to be in quotes
