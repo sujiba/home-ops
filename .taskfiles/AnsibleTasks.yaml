@@ -25,6 +25,12 @@ tasks:
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini --list-hosts
 
+  ping:
+    desc: Ping all the hosts
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini --one-line -m 'ping'
+
   prepare:
     desc: Prepare all the k8s nodes for running k3s
     dir: "{{.ANSIBLE_DIR}}"
@@ -37,22 +43,25 @@ tasks:
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-installation.yaml
 
+  uptime:
+    desc: Uptime of all the hosts
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini --one-line -a 'uptime'
+
+  reboot:
+    desc: Reboot all the k8s nodes
+    dir: "{{.ANSIBLE_DIR}}"
+    cmd: ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-reboot.yaml
+
+  poweroff:
+    desc: Shutdown all the k8s nodes
+    dir: "{{.ANSIBLE_DIR}}"
+    cmd: ansible kubernetes -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.inic -a '/usr/bin/systemctl poweroff' --become
+
   nuke:
     desc: Uninstall Kubernetes on the nodes
     dir: "{{.ANSIBLE_DIR}}"
     interactive: true
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-nuke.yaml
-      - task: force-reboot
-
-  ping:
-    desc: Ping all the hosts
-    dir: "{{.ANSIBLE_DIR}}"
-    cmds:
-      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini --one-line -m 'ping'
-
-  uptime:
-    desc: Uptime of all the hosts
-    dir: "{{.ANSIBLE_DIR}}"
-    cmds:
-      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.ini --one-line -a 'uptime'
