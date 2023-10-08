@@ -34,7 +34,6 @@ tasks:
         cilium-cli
         direnv
         fluxcd/tap/flux
-        go-task/tap/go-task
         helm
         ipcalc
         jq

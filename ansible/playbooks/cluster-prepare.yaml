@@ -55,14 +55,14 @@
       block:
         - name: System Configuration | Set bash profile.
           ansible.builtin.copy:
-            src: files/profile.d/00-bash.sh
+            src: files/00-bash.sh
             dest: /etc/profile.d/00-bash.sh
             owner: root
             group: root
             mode: '0644'
         - name: System Configuration | Set vim config.
           ansible.builtin.copy:
-            src: files/vim/vimrc.local
+            src: files/vimrc.local
             dest: /etc/vim/vimrc.local
             owner: root
             group: root
