@@ -1,7 +1,17 @@
 ---
-# Below var provides Kubernetes clusters with a virtual IP and load balancer
-# ... see https://github.com/kube-vip/kube-vip
+# Choose your timezone
+timezone: Europe/Berlin
+github_username: sujiba
+
+# CIDR your nodes are on (e.g. 192.168.1.0/24)
+node_cidr: 192.168.178.0/24
+# The IP address to use with kube-vip, choose an available IP in your nodes network that is not being used
 kube_vip_address: 192.168.178.100
+
+# Keep the next three options default unless you know what you are doing
+cluster_cidr: 10.42.0.0/16
+service_cidr: 10.43.0.0/16
+coredns_addr: 10.43.0.10
 
 # Below vars are for the xanmanning.k3s role
 # ...see https://github.com/PyratLabs/ansible-role-k3s#globalcluster-variables
