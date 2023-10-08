@@ -33,5 +33,23 @@ task ansible:uptime
 task ansible:nuke
 ```
 
+### Create age key
+```
+age-keygen -o age.agekey
+```
+
+### Move age key to sops directory
+```
+mkdir -p ~/.config/sops/age
+mv age.agekey ~/.config/sops/age/keys.txt
+```
+
+### Export age key for k8s secrets
+```
+vi ~/.zshrc
+export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+source ~/.zshrc
+```
+
 ### Bootstrap cluster
-[Bootstrap](kubernetes/README.md)
+[Bootstrap](kubernetes/bootstrap/README.md)
