@@ -1,4 +1,8 @@
 # Bootstrap
+```
+kubectl apply --kustomize ./kubernetes/bootstrap
+```
+
 ### Create Namespace
 ```
 kubectl create ns flux-system
