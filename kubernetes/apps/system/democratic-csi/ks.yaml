@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-local-path-provisioner
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/kube-system/democratic-csi/local-path
+  path: ./kubernetes/apps/system/democratic-csi/local-path
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,4 +17,4 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: local-path-provisioner
-      namespace: kube-system
+      namespace: system
