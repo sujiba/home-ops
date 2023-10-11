@@ -62,9 +62,7 @@ data:
     kubeControllerManager:
       enabled: true
       endpoints:
-      {% for item in bootstrap_nodes.master %}
-        - {{ item.address }}
-      {% endfor %}
+        - 192.168.178.101
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate labels provided by k3s
@@ -74,15 +72,11 @@ data:
     kubeEtcd:
       enabled: true
       endpoints:
-      {% for item in bootstrap_nodes.master %}
-        - {{ item.address }}
-      {% endfor %}
+        - 192.168.178.101
     kubeScheduler:
       enabled: true
       endpoints:
-      {% for item in bootstrap_nodes.master %}
-        - {{ item.address }}
-      {% endfor %}
+        - 192.168.178.101
       serviceMonitor:
         metricRelabelings:
           # Remove duplicate labels provided by k3s
@@ -116,7 +110,7 @@ data:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: local-hostpath
               resources:
                 requests:
                   storage: 10Gi
