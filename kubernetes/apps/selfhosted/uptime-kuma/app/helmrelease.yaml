@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app uptime-kuma
+  name: uptime-kuma
   namespace: selfhosted
 spec:
   interval: 30m
@@ -28,7 +28,7 @@ spec:
     controllers:
       main:
         type: statefulset
-
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
 
@@ -61,11 +61,12 @@ spec:
               service:
                 name: main
                 port: http
-
       tls:
         - hosts:
             - *host
 
     persistence:
-      enabled: true
-      storageClassName: local-hostpath
+      config:
+        enabled: true
+        storageClassName: local-hostpath
+        size: 1Gi
