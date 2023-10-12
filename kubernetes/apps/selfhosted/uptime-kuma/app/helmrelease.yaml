@@ -69,5 +69,5 @@ spec:
     persistence:
       config:
         enabled: true
-        type: local-hostpath
+        storageClass: local-hostpath
         size: 1Gi
