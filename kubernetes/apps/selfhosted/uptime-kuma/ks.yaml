@@ -5,9 +5,6 @@ metadata:
   name: cluster-apps-uptime-kuma
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: local-path-provisioner
-      namespace: system
   path: ./kubernetes/apps/selfhosted/uptime-kuma/app
   prune: true
   sourceRef:
