@@ -24,10 +24,6 @@ spec:
       retries: 3
       remediateLastFailure: true
 
-  dependsOn:
-    - name: local-path-provisioner
-      namespace: system
-
   values:
     controllers:
       main:
