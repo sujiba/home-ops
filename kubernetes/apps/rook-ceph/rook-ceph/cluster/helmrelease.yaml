@@ -32,6 +32,12 @@ spec:
       network:
         provider: host
 
+      # single node
+      mon:
+        count: 1
+      mgr:
+        count: 1
+
       resources:
         mgr:
           requests:
