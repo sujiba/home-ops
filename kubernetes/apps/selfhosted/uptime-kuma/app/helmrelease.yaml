@@ -25,12 +25,21 @@ spec:
       remediateLastFailure: true
 
   values:
+    # https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
     controllers:
       main:
-        type: deployment
-        strategy: Recreate
+        type: statefulset
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+
+        statefulset:
+          volumeClaimTemplates:
+            - name: data
+              mountPath: /data
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: local-hostpath
 
         containers:
           main:
@@ -66,8 +75,8 @@ spec:
           - hosts:
               - *host
 
-    persistence:
-      config:
-        enabled: true
-        storageClass: local-hostpath
-        size: 1Gi
+    # persistence:
+    #  config:
+    #    enabled: true
+    #    storageClass: local-hostpath
+    #    size: 1Gi
