@@ -52,7 +52,5 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      host: &host "longhorn.${SECRET_DOMAIN}"
-      path: /
+      host: longhorn.${SECRET_DOMAIN}
       tls: true
-      tlsSecret: *host
