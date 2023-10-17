@@ -35,7 +35,7 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: data
+            - name: /app/data
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: local-hostpath
@@ -46,6 +46,7 @@ spec:
             image:
               repository: louislam/uptime-kuma
               tag: 1.23.3
+              pullPolicy: IfNotPresent
             resources:
               requests:
                 cpu: 500m
