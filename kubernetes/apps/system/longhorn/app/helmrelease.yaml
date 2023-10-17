@@ -1,0 +1,63 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+
+  values:
+    # https://github.com/longhorn/longhorn/blob/master/chart/values.yaml
+    persistence:
+      # -- Set filesystem type for Longhorn StorageClass
+      defaultFsType: ext4
+      # -- Set replica count for Longhorn StorageClass. By default 3.
+      defaultClassReplicaCount: 1
+
+    csi:
+      # -- Specify kubelet root-dir. Leave blank to autodetect
+      kubeletRootDir: 1
+      # -- Specify replica count of CSI Attacher. Leave blank to use default count: 3
+      attacherReplicaCount: 1
+      # -- Specify replica count of CSI Provisioner. Leave blank to use default count: 3
+      provisionerReplicaCount: 1
+      # -- Specify replica count of CSI Resizer. Leave blank to use default count: 3
+      resizerReplicaCount: 1
+      # -- Specify replica count of CSI Snapshotter. Leave blank to use default count: 3
+      snapshotterReplicaCount: 1
+
+    defaultSettings:
+      # -- Allow scheduling on nodes with existing healthy replicas of the same volume. By default false.
+      replicaSoftAntiAffinity: true
+      # -- The default number of replicas when a volume is created from the Longhorn UI.
+      # For Kubernetes configuration, update the `numberOfReplicas` in the StorageClass. By default 3.
+      defaultReplicaCount: 1
+
+    longhornUI:
+      # -- Replica count for longhorn ui. By default 2.
+      replicas: 1
+
+    ingress:
+      enabled: true
+      ingressClassName: internal
+      hosts:
+        - host: &host "longhorn.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                name: main
+                port: http
+      tls:
+        - hosts:
+            - *host

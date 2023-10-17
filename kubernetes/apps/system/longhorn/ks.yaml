@@ -2,10 +2,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-local-path-provisioner
+  name: cluster-apps-longhorn
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/system/democratic-csi/local-path
+  path: ./kubernetes/apps/system/longhorn/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -13,8 +13,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: local-path-provisioner
+      name: longhorn
       namespace: system
   interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m

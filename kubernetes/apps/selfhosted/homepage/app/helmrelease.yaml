@@ -41,6 +41,12 @@ spec:
               storageClass: local-hostpath
               globalMounts:
                 - path: /app/config
+            - name: icons
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: local-hostpath
+              globalMounts:
+                - path: /app/public/icons
 
         containers:
           main:
