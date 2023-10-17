@@ -52,14 +52,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      hosts:
-        - host: &host "longhorn.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                name: main
-                port: http
-      tls:
-        - hosts:
-            - *host
+      host: &host "longhorn.${SECRET_DOMAIN}"
+      path: /
+      tls: true
+      tlsSecret: *host
