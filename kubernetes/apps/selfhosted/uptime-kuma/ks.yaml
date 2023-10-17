@@ -5,18 +5,12 @@ metadata:
   name: cluster-apps-uptime-kuma
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-apps-local-path-provisioner
+  interval: 30m
   path: ./kubernetes/apps/selfhosted/uptime-kuma/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-ops
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: uptime-kuma
-      namespace: selfhosted
-  interval: 30m
-  retryInterval: 1m
-  timeout: 3m
+  wait: false
+  dependsOn:
+    - name: cluster-apps-local-path-provisioner

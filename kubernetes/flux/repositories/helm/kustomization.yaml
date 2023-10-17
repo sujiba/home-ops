@@ -13,6 +13,7 @@ resources:
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
   - ./kubernetes-dashboard.yaml
+  - ./longhorn.yaml
   - ./metrics-server.yaml
   - ./prometheus-community.yaml
   - ./rook-ceph.yaml
