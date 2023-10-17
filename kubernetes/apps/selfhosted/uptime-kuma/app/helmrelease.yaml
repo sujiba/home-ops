@@ -35,7 +35,7 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: /app/data
+            - name: data
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: local-hostpath
