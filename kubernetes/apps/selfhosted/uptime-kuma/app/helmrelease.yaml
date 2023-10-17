@@ -39,8 +39,7 @@ spec:
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: local-hostpath
-              globalMounts:
-                - path: /app/data
+              mountPath: /app/data
 
         containers:
           main:
