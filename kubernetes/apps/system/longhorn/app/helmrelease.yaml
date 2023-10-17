@@ -25,8 +25,6 @@ spec:
       defaultClassReplicaCount: 1
 
     csi:
-      # -- Specify kubelet root-dir. Leave blank to autodetect
-      kubeletRootDir: 1
       # -- Specify replica count of CSI Attacher. Leave blank to use default count: 3
       attacherReplicaCount: 1
       # -- Specify replica count of CSI Provisioner. Leave blank to use default count: 3
