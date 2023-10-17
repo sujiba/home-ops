@@ -36,10 +36,11 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: data
-              mountPath: /data
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: local-hostpath
+              globalMounts:
+                - path: /app/data
 
         containers:
           main:
@@ -74,9 +75,3 @@ spec:
         tls:
           - hosts:
               - *host
-
-    # persistence:
-    #  config:
-    #    enabled: true
-    #    storageClass: local-hostpath
-    #    size: 1Gi
