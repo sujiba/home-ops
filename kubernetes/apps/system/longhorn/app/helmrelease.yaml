@@ -39,6 +39,8 @@ spec:
     defaultSettings:
       # -- Allow scheduling on nodes with existing healthy replicas of the same volume. By default false.
       replicaSoftAntiAffinity: true
+      # -- Default path to use for storing data on a host. By default "/var/lib/longhorn/"
+      defaultDataPath: /var/mnt/longhorn
       # -- The default number of replicas when a volume is created from the Longhorn UI.
       # For Kubernetes configuration, update the `numberOfReplicas` in the StorageClass. By default 3.
       defaultReplicaCount: 1
