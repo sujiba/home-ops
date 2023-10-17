@@ -22,7 +22,7 @@ kubectl apply -f kubernetes/flux/vars/cluster-settings.yaml
 kubectl apply --server-side --kustomize ./kubernetes/flux/config
 ```
 
-### Force reconile for imidiate bootstrap
+### Force reconcile for imidiate bootstrap
 ```
 flux reconcile -n flux-system kustomization flux
 ```
