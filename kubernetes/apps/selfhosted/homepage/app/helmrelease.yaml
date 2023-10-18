@@ -40,10 +40,7 @@ spec:
               size: 1Gi
               storageClass: longhorn
               globalMounts:
-                - subpath: config
-                  path: /app/config
-                - subpath: icons
-                  path: /app/public/icons
+                - path: /app/config
 
         containers:
           main:
@@ -51,6 +48,8 @@ spec:
               repository: ghcr.io/gethomepage/homepage
               tag: v0.7.3
               pullPolicy: IfNotPresent
+            env:
+              TZ: ${TIMEZONE}v
             resources:
               requests:
                 cpu: 500m
