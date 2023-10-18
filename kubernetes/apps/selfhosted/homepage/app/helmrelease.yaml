@@ -40,7 +40,10 @@ spec:
               size: 1Gi
               storageClass: longhorn
               globalMounts:
-                - path: /app
+                - subpath: config
+                  path: /app/config
+                - subpath: icons
+                  path: /app/public/icons
 
         containers:
           main:
