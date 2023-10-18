@@ -38,15 +38,9 @@ spec:
             - name: config
               accessMode: ReadWriteOnce
               size: 1Gi
-              storageClass: local-hostpath
+              storageClass: longhorn
               globalMounts:
-                - path: /app/config
-            - name: icons
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: local-hostpath
-              globalMounts:
-                - path: /app/public/icons
+                - path: /app
 
         containers:
           main:
