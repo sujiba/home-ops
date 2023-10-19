@@ -9,8 +9,7 @@ metadata:
 data:
   bookmarks.yaml: ""
   docker.yaml: ""
-  kubernetes.yaml: |
-    mode: cluster
+  kubernetes.yaml: ""
   services.yaml: ""
   settings.yaml: |
     title: Dashboard
