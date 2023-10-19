@@ -29,7 +29,7 @@ spec:
     controllers:
       main:
         type: statefulset
-        strategy: rollingUpdate
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
 
