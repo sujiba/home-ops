@@ -70,15 +70,15 @@ spec:
           - hosts:
               - *host
 
-  persistence:
-    config:
-      enabled: true
-      type: persistentVolumeClaim
-      storageClass: longhorn
-      accessMode: ReadWriteOnce
-      size: 1Gi
-      globalMounts:
-        - subpath: config
-          path: /app/config
-        - subpath: icons
-          path: /app/public/icons
+    persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        storageClass: longhorn
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        globalMounts:
+          - subpath: config
+            path: /app/config
+          - subpath: icons
+            path: /app/public/icons
