@@ -13,4 +13,4 @@ spec:
     name: home-ops
   wait: false
   dependsOn:
-    - name: cluster-apps-local-path-provisioner
+    - name: cluster-apps-longhorn
