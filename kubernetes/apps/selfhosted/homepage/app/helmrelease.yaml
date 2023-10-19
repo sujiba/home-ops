@@ -36,9 +36,10 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: data
-              mountPath: /app
               accessMode: "ReadWriteOnce"
               size: 1Gi
+              globalMounts:
+                - path: /app
 
         containers:
           main:
@@ -76,16 +77,3 @@ spec:
         tls:
           - hosts:
               - *host
-
-    persistence:
-      config:
-        enabled: true
-        type: persistentVolumeClaim
-        storageClass: longhorn
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        globalMounts:
-          - subpath: config
-            path: /app/config
-          - subpath: icons
-            path: /app/public/icons
