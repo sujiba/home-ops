@@ -20,8 +20,3 @@ data:
   widgets.yaml: |
     - logo:
         icon: https://raw.githubusercontent.com/sujiba/home-ops/main/icons/sujiba.png
-    - longhorn:
-        expanded: false
-        total: true
-        labels: true
-        nodes: false
