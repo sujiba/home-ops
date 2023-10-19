@@ -35,12 +35,12 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: app
+            - name: icons
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: longhorn
               globalMounts:
-                - path: /app/config
+                - path: /app/public/icons
 
         containers:
           main:
