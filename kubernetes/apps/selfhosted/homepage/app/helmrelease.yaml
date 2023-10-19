@@ -35,11 +35,18 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: app
+            - name: config
               accessMode: "ReadWriteOnce"
               size: 1Gi
+              storageClass: longhorn
               globalMounts:
-                - path: /app
+                - path: /app/config
+            - name: icons
+              accessMode: "ReadWriteOnce"
+              size: 1Gi
+              storageClass: longhorn
+              globalMounts:
+                - path: /app/public/icons
 
         containers:
           main:
@@ -56,8 +63,10 @@ spec:
               limits:
                 memory: 1000Mi
             volumeMounts:
-              - name: app
-                path: /app
+              - name: config
+                mountPath: /app/config
+              - name: icons
+                mountPath: /app/public/icons
 
     service:
       main:
