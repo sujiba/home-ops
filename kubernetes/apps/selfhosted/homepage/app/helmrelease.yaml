@@ -35,7 +35,7 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: data
+            - name: app
               accessMode: "ReadWriteOnce"
               size: 1Gi
               globalMounts:
@@ -55,6 +55,9 @@ spec:
                 memory: 500Mi
               limits:
                 memory: 1000Mi
+            volumeMounts:
+              - name: app
+                path: /app
 
     service:
       main:
