@@ -28,19 +28,10 @@ spec:
     # https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
     controllers:
       main:
-        type: statefulset
-        strategy: RollingUpdate
+        type: deployment
+        strategy: Recreate
         annotations:
           reloader.stakater.com/auto: "true"
-
-        statefulset:
-          volumeClaimTemplates:
-            - name: icons
-              accessMode: "ReadWriteOnce"
-              size: 1Gi
-              storageClass: longhorn
-              globalMounts:
-                - path: /app/public/icons
 
         containers:
           main:
@@ -56,9 +47,6 @@ spec:
                 memory: 500Mi
               limits:
                 memory: 1000Mi
-            volumeMounts:
-              - name: icons
-                mountPath: /app/public/icons
 
     service:
       main:
@@ -81,3 +69,22 @@ spec:
         tls:
           - hosts:
               - *host
+
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: homepage-config
+        globalMounts:
+          - subPath: bookmarks.yaml
+            path: /app/config/bookmarks.yaml
+          - subPath: docker.yaml
+            path: /app/config/docker.yaml
+          - subPath: kubernetes.yaml
+            path: /app/config/kubernetes.yaml
+          - subPath: services.yaml
+            path: /app/config/services.yaml
+          - subPath: settings.yaml
+            path: /app/config/settings.yaml
+          - subPath: widgets.yaml
+            path: /app/config/widgets.yaml

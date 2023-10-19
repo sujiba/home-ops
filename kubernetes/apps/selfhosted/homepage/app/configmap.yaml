@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: selfhosted
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  bookmarks.yaml: ""
+  docker.yaml: ""
+  kubernetes.yaml: |
+    mode: cluster
+  services.yaml: ""
+  settings.yaml: |
+    title: Dashboard
+    base: https://dashboard.${SECRET_DOMAIN}
+    theme: dark
+    color: slate
+    headerStyle: boxed
+  widgets.yaml: |
+    - logo:
+        icon: https://raw.githubusercontent.com/sujiba/home-ops/main/icons/sujiba.png
+    - longhorn:
+        expanded: false
+        total: true
+        labels: true
+        nodes: false
