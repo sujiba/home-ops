@@ -35,7 +35,7 @@ spec:
 
         statefulset:
           volumeClaimTemplates:
-            - name: /app
+            - name: app
               accessMode: ReadWriteOnce
               size: 1Gi
               storageClass: longhorn
