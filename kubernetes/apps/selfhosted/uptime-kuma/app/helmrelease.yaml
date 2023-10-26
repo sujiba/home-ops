@@ -48,6 +48,8 @@ spec:
               repository: louislam/uptime-kuma
               tag: 1.23.3
               pullPolicy: IfNotPresent
+            env:
+              TZ: ${TIMEZONE}
             resources:
               requests:
                 cpu: 500m
