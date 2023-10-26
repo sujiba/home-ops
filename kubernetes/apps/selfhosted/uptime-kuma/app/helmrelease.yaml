@@ -38,7 +38,7 @@ spec:
             - name: data
               accessMode: ReadWriteOnce
               size: 1Gi
-              storageClass: local-hostpath
+              storageClass: longhorn
               globalMounts:
                 - path: /app/data
 

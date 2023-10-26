@@ -34,11 +34,12 @@ spec:
           reloader.stakater.com/auto: "true"
 
         statefulset:
-          - name: /app
-            mount_path: /app
+          - name: app
             accessMode: "ReadWriteOnce"
             size: 1Gi
-            storageClass: local-hostpath
+            storageClass: longhorn
+            globalMounts:
+              - path: /app
 
         containers:
           main:
