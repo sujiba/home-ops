@@ -28,10 +28,17 @@ spec:
     # https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
     controllers:
       main:
-        type: deployment
-        strategy: Recreate
+        type: statefulset
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+
+        statefulset:
+          - name: /app
+            mount_path: /app
+            accessMode: "ReadWriteOnce"
+            size: 1Gi
+            storageClass: local-hostpath
 
         containers:
           main:
@@ -70,21 +77,21 @@ spec:
           - hosts:
               - *host
 
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: homepage-config
-        globalMounts:
-          - subPath: bookmarks.yaml
-            path: /app/config/bookmarks.yaml
-          - subPath: docker.yaml
-            path: /app/config/docker.yaml
-          - subPath: kubernetes.yaml
-            path: /app/config/kubernetes.yamlg
-          - subPath: services.yaml
-            path: /app/config/services.yaml
-          - subPath: settings.yaml
-            path: /app/config/settings.yaml
-          - subPath: widgets.yaml
-            path: /app/config/widgets.yaml
+    # persistence:
+    #   config:
+    #     enabled: true
+    #     type: configMap
+    #     name: homepage-config
+    #     globalMounts:
+    #       - subPath: bookmarks.yaml
+    #         path: /app/config/bookmarks.yaml
+    #       - subPath: docker.yaml
+    #         path: /app/config/docker.yaml
+    #       - subPath: kubernetes.yaml
+    #         path: /app/config/kubernetes.yamlg
+    #       - subPath: services.yaml
+    #         path: /app/config/services.yaml
+    #       - subPath: settings.yaml
+    #         path: /app/config/settings.yaml
+    #       - subPath: widgets.yaml
+    #         path: /app/config/widgets.yaml
